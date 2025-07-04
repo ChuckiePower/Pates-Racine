@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Racine - La Révolution des Pâtes</title>
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+
     <link rel="stylesheet" href="style.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,6 +23,7 @@
             <ul class="nav-links">
                 <li><a href="#notre-histoire">Notre Histoire</a></li>
                 <li><a href="#produits">Nos Pâtes</a></li>
+                <li><a href="#tracabilite">Traçabilité</a></li>
                 <li><a href="#communaute">Avis</a></li>
             </ul>
             <div class="burger">
@@ -88,14 +92,8 @@
                             <h3>Penne à l'orge</h3>
                             <p>Le caractère brut de l'orge pour des plats qui ne manquent pas d'audace.</p>
                             <div class="tags">
-                                <span class="tag">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
-                                    Sans gluten
-                                </span>
-                                <span class="tag">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                                    Vegan
-                                </span>
+                                <span class="tag">Sans gluten</span>
+                                <span class="tag">Vegan</span>
                             </div>
                             <a href="#" class="cta-secondary">L'adopter</a>
                         </div>
@@ -106,14 +104,8 @@
                             <h3>Penne lentilles corail</h3>
                             <p>La douceur d'un duo iconique. Le passe-partout de génie pour vos recettes.</p>
                             <div class="tags">
-                                <span class="tag">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z"></path><line x1="16" y1="8" x2="2" y2="22"></line><line x1="17.5" y1="15" x2="9" y2="15"></line></svg>
-                                    Sans gluten
-                                </span>
-                                <span class="tag">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                                    Vegan
-                                </span>
+                                <span class="tag">Sans gluten</span>
+                                <span class="tag">Vegan</span>
                             </div>
                              <a href="#" class="cta-secondary">La choisir</a>
                         </div>
@@ -124,17 +116,28 @@
                             <h3>Penne au blé</h3>
                             <p>Le shot de protéines et de couleur qui va réveiller votre assiette (et vos papilles).</p>
                              <div class="tags">
-                                <span class="tag">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-                                    Vegan
-                                </span>
+                                <span class="tag">Vegan</span>
                             </div>
                              <a href="#" class="cta-secondary">La dévorer</a>
                         </div>
                     </div>
                 </div>
             </section>
+            
+            <section id="tracabilite" class="container">
+                <div class="section-intro">
+                    <h2 class="reveal">De la terre à votre assiette.</h2>
+                    <p class="reveal">Nous choisissons nos ingrédients avec soin, directement auprès de producteurs locaux passionnés. Cliquez sur un produit pour découvrir son voyage jusqu'à notre atelier en Alsace.</p>
+                </div>
+                
+                <div class="map-controls reveal">
+                    <button class="map-btn" data-product="orge">Penne à l'orge</button>
+                    <button class="map-btn" data-product="lentilles">Penne lentilles corail</button>
+                    <button class="map-btn" data-product="ble">Penne au blé</button>
+                </div>
 
+                <div id="map" class="reveal"></div>
+            </section>
             <section id="communaute" class="container">
                 <h2 class="reveal">La parole à nos clients.</h2>
                 <div class="testimonials-grid">
@@ -167,7 +170,8 @@
              <p class="copyright">© 2025 Racine. Tous droits réinventés.</p>
         </footer>
     </div>
-
+    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script src="https://unpkg.com/scrollreveal"></script>
     <script src="app.js"></script>
 </body>
