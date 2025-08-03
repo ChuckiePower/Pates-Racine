@@ -3,176 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Racine - La Révolution des Pâtes</title>
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
-
-    <link rel="stylesheet" href="style.css">
-
+    <title>Restaurant "El Manou"</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Playfair+Display:wght@800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- Styles Généraux --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        /* --- Conteneur Principal --- */
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* --- Titre --- */
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+
+        p.subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        /* --- Groupes de Formulaire --- */
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group h2 {
+            color: #555;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        .choices {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* --- Styles des Choix (Radio & Checkbox) --- */
+        .choice {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 8px;
+            transition: background-color 0.2s;
+        }
+
+        .choice:hover {
+            background-color: #f8f9fa;
+        }
+
+        .choice input {
+            margin-right: 12px;
+            transform: scale(1.2);
+            accent-color: #007bff;
+        }
+
+        .choice label {
+            color: #444;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        
+        /* --- Bouton --- */
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #007bff, #0056b3);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 123, 255, 0.3);
+        }
+
+        /* --- Ticket de commande --- */
+        #ticket {
+            background-color: #fdfaf3;
+            border: 2px dashed #ccc;
+            padding: 30px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        #ticket h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        #ticket p {
+            color: #555;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        #ticket p span {
+            font-weight: 600;
+            color: #000;
+        }
+
+        /* --- Classe pour cacher des éléments --- */
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="page-wrapper">
-        <nav class="navbar">
-            <div class="navbar-logo">
-                <a href="#">Racine</a>
+    <div class="container">
+        <form id="orderForm">
+            <h1>Restaurant "El Manou"</h1>
+            <p class="subtitle">Composez votre menu parfait !</p>
+
+            <div class="form-group">
+                <h2>1. Le Plat Principal</h2>
+                <div class="choices">
+                    <div class="choice">
+                        <input type="radio" id="assiette" name="plat" value="Kebab sur assiette" checked required>
+                        <label for="assiette">Kebab sur assiette</label>
+                    </div>
+                    <div class="choice">
+                        <input type="radio" id="pain" name="plat" value="Kebab dans pain fait maison">
+                        <label for="pain">Kebab dans pain fait maison</label>
+                    </div>
+                </div>
             </div>
-            <ul class="nav-links">
-                <li><a href="#notre-histoire">Notre Histoire</a></li>
-                <li><a href="#produits">Nos Pâtes</a></li>
-                <li><a href="#tracabilite">Traçabilité</a></li>
-                <li><a href="#communaute">Avis</a></li>
-            </ul>
-            <div class="burger">
-                <div class="line1"></div>
-                <div class="line2"></div>
-                <div class="line3"></div>
+
+            <div class="form-group">
+                <h2>2. La Garniture Principale</h2>
+                <div class="choices">
+                    <div class="choice">
+                        <input type="radio" id="viandar" name="type" value="Viandar" checked required>
+                        <label for="viandar">Viandar</label>
+                    </div>
+                    <div class="choice">
+                        <input type="radio" id="vegetarien" name="type" value="Végétarien">
+                        <label for="vegetarien">Végétarien</label>
+                    </div>
+                </div>
             </div>
-        </nav>
-        
-        <header class="hero" role="banner">
-            <div class="hero-content">
-                <h1 class="reveal">Authentique par nature.</h1>
-                <p class="reveal">Racine, c'est plus que des pâtes. C'est une promesse : celle du goût, du bon, du vrai. Sans gluten, mais avec tout le reste.</p>
-                <a href="#produits" class="cta-button reveal">Devenir Pastavore</a>
+
+            <div class="form-group">
+                <h2>3. Les Accompagnements (plusieurs choix possibles)</h2>
+                <div class="choices">
+                    <div class="choice"><input type="checkbox" id="salade" name="accompagnement" value="Salade"><label for="salade">Salade</label></div>
+                    <div class="choice"><input type="checkbox" id="tomates" name="accompagnement" value="Tomates"><label for="tomates">Tomates</label></div>
+                    <div class="choice"><input type="checkbox" id="oignon" name="accompagnement" value="Oignon"><label for="oignon">Oignon</label></div>
+                    <div class="choice"><input type="checkbox" id="carotte" name="accompagnement" value="Carotte"><label for="carotte">Carotte</label></div>
+                    <div class="choice"><input type="checkbox" id="chou" name="accompagnement" value="Chou"><label for="chou">Chou</-label></div>
+                </div>
             </div>
-            <a href="#notre-histoire" class="scroll-down-icon" aria-label="Faire défiler vers le bas"></a>
-        </header>
 
-        <main>
-            <section id="notre-histoire" class="container">
-                <div class="section-intro">
-                    <h2 class="reveal">Comment tout a commencé.</h2>
-                    <p class="reveal">Racine n'est pas née en un jour. C'est le fruit d'une passion, d'essais, et d'une vision : rendre le sans-gluten gourmand et accessible.</p>
+            <div class="form-group">
+                <h2>4. Les Sauces (plusieurs choix possibles)</h2>
+                 <div class="choices">
+                    <div class="choice"><input type="checkbox" id="blanche" name="sauce" value="Sauce Blanche"><label for="blanche">Sauce Blanche</label></div>
+                    <div class="choice"><input type="checkbox" id="ketchup" name="sauce" value="Ketchup"><label for="ketchup">Ketchup</label></div>
+                    <div class="choice"><input type="checkbox" id="mayo" name="sauce" value="Mayo"><label for="mayo">Mayo</label></div>
+                    <div class="choice"><input type="checkbox" id="moutarde" name="sauce" value="Moutarde"><label for="moutarde">Moutarde</label></div>
                 </div>
-
-                <div class="horizontal-timeline reveal">
-                    <div class="timeline-step">
-                        <div class="step-dot"></div>
-                        <h4>2022</h4>
-                        <p>L'idée germe après que Léo se retrouve à l'hopital après une réaction au gluten.</p>
-                    </div>
-                    <div class="timeline-step">
-                        <div class="step-dot"></div>
-                        <h4>2023</h4>
-                        <p>La recette parfaite est trouvée après des mois de tests.</p>
-                    </div>
-                    <div class="timeline-step">
-                        <div class="step-dot"></div>
-                        <h4>2024</h4>
-                        <p>Partenariat avec notre atelier français.</p>
-                    </div>
-                    <div class="timeline-step">
-                        <div class="step-dot"></div>
-                        <h4>2025</h4>
-                        <p>Lancement officiel de Racine.</p>
-                    </div>
-                </div>
-
-                <div class="founders-section reveal">
-                    <div class="founders-image">
-                        <img src="https://images.unsplash.com/photo-1537721664796-76f77222a5d0?q=80&w=3270&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Les fondateurs de Racine, Léo et Clara.">
-                    </div>
-                    <div class="founders-text">
-                        <h3>Léo, le pastavore fondateur</h3>
-                        <p>Plus que des partenaires, nous sommes des passionnés. Notre mission est simple : prouver que l'on peut changer les règles, sans jamais sacrifier le plaisir. Chaque paquet de Racine est une promesse, la nôtre.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="produits" class="container">
-                <h2 class="reveal">Nos 3 créations originales.</h2>
-                <div class="product-grid">
-                     <div class="product-card reveal">
-                        <div class="product-image-wrapper"><img src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?q=80&w=1480&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop" alt="Plat de Penne au Sarrasin."></div>
-                        <div class="product-card-content">
-                            <h3>Penne à l'orge</h3>
-                            <p>Le caractère brut de l'orge pour des plats qui ne manquent pas d'audace.</p>
-                            <div class="tags">
-                                <span class="tag">Sans gluten</span>
-                                <span class="tag">Vegan</span>
-                            </div>
-                            <a href="#" class="cta-secondary">L'adopter</a>
-                        </div>
-                    </div>
-                     <div class="product-card reveal">
-                         <div class="product-image-wrapper"><img src="https://images.unsplash.com/photo-1626028937210-754d2118d5f7?q=80&w=1438&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop" alt="Assiette de Penne Maïs & Riz."></div>
-                        <div class="product-card-content">
-                            <h3>Penne lentilles corail</h3>
-                            <p>La douceur d'un duo iconique. Le passe-partout de génie pour vos recettes.</p>
-                            <div class="tags">
-                                <span class="tag">Sans gluten</span>
-                                <span class="tag">Vegan</span>
-                            </div>
-                             <a href="#" class="cta-secondary">La choisir</a>
-                        </div>
-                    </div>
-                    <div class="product-card reveal">
-                         <div class="product-image-wrapper"><img src="https://images.unsplash.com/photo-1709201417401-5c72ed84f191?q=80&w=1523&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop" alt="Penne aux Lentilles Corail."></div>
-                        <div class="product-card-content">
-                            <h3>Penne au blé</h3>
-                            <p>Le shot de protéines et de couleur qui va réveiller votre assiette (et vos papilles).</p>
-                             <div class="tags">
-                                <span class="tag">Vegan</span>
-                            </div>
-                             <a href="#" class="cta-secondary">La dévorer</a>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            </div>
             
-            <section id="tracabilite" class="container">
-                <div class="section-intro">
-                    <h2 class="reveal">De la terre à votre assiette.</h2>
-                    <p class="reveal">Nous choisissons nos ingrédients avec soin, directement auprès de producteurs locaux passionnés. Cliquez sur un produit pour découvrir son voyage jusqu'à notre atelier en Alsace.</p>
-                </div>
-                
-                <div class="map-controls reveal">
-                    <button class="map-btn" data-product="orge">Penne à l'orge</button>
-                    <button class="map-btn" data-product="lentilles">Penne lentilles corail</button>
-                    <button class="map-btn" data-product="ble">Penne au blé</button>
-                </div>
+            <button type="submit">Générer mon ticket</button>
+        </form>
 
-                <div id="map" class="reveal"></div>
-            </section>
-            <section id="communaute" class="container">
-                <h2 class="reveal">La parole à nos clients.</h2>
-                <div class="testimonials-grid">
-                     <div class="testimonial-card reveal">
-                        <p>"Le game-changer de mes soirées. Enfin des pâtes sans gluten qui ne sacrifient pas le goût sur l'autel du 'sain'."</p>
-                        <div class="author-info">
-                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=1887&auto=format&fit=crop" alt="Photo de Léo">
-                            <span>Léo, 24 ans - Pastavore Converti</span>
-                        </div>
-                    </div>
-                    <div class="testimonial-card reveal">
-                        <p>"J'ai testé les Penne Lentilles Corail après ma séance de sport. C'est une tuerie. Simple, bon, efficace."</p>
-                        <div class="author-info">
-                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=1964&auto=format&fit=crop" alt="Photo de Clara">
-                            <span>Clara, 28 ans - Foodie & Athlète</span>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <footer role="contentinfo">
-             <div class="logo">Racine</div>
-             <p class="footer-tagline">Changeons les règles, pas le plaisir.</p>
-             <div class="footer-links">
-                 <a href="#">Boutique</a>
-                 <a href="#">Notre Manifeste</a>
-                 <a href="#">Contact</a>
-             </div>
-             <p class="copyright">© 2025 Racine. Tous droits réinventés.</p>
-        </footer>
+        <div id="ticket" class="hidden">
+            <h2>🎉 Votre Ticket de Commande 🎉</h2>
+            <p>Plat : <span id="ticketPlat"></span></p>
+            <p>Type : <span id="ticketType"></span></p>
+            <p>Accompagnements : <span id="ticketAccompagnements"></span></p>
+            <p>Sauces : <span id="ticketSauces"></span></p>
+        </div>
     </div>
-    
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-    <script src="https://unpkg.com/scrollreveal"></script>
-    <script src="app.js"></script>
+
+    <script>
+        // On attend que la page soit entièrement chargée
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // On récupère les éléments importants de la page
+            const orderForm = document.getElementById('orderForm');
+            const ticketDiv = document.getElementById('ticket');
+
+            // On écoute l'événement "submit" du formulaire
+            orderForm.addEventListener('submit', function(event) {
+                // On empêche le rechargement de la page, qui est le comportement par défaut d'un formulaire
+                event.preventDefault();
+
+                // --- Récupération des valeurs ---
+
+                // 1. Plat (bouton radio, un seul choix possible)
+                const plat = document.querySelector('input[name="plat"]:checked').value;
+
+                // 2. Type (bouton radio, un seul choix possible)
+                const type = document.querySelector('input[name="type"]:checked').value;
+
+                // 3. Accompagnements (cases à cocher, plusieurs choix)
+                const accompagnementsNodes = document.querySelectorAll('input[name="accompagnement"]:checked');
+                let accompagnements = Array.from(accompagnementsNodes).map(node => node.value).join(', ');
+                if (accompagnements === '') {
+                    accompagnements = 'Aucun';
+                }
+
+                // 4. Sauces (cases à cocher, plusieurs choix)
+                const saucesNodes = document.querySelectorAll('input[name="sauce"]:checked');
+                let sauces = Array.from(saucesNodes).map(node => node.value).join(', ');
+                 if (sauces === '') {
+                    sauces = 'Aucune';
+                }
+
+                // --- Affichage sur le ticket ---
+                
+                document.getElementById('ticketPlat').textContent = plat;
+                document.getElementById('ticketType').textContent = type;
+                document.getElementById('ticketAccompagnements').textContent = accompagnements;
+                document.getElementById('ticketSauces').textContent = sauces;
+
+                // --- On cache le formulaire et on montre le ticket ---
+                orderForm.classList.add('hidden');
+                ticketDiv.classList.remove('hidden');
+            });
+        });
+    </script>
+
 </body>
 </html>
